@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LostSignal</title>
+</head>
+<body>
+
+
+<h2>Обновить статус по ID</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="number" name="search_id" placeholder="ID инцидента" required>
+    <select name="new_status">
+        <option value="open">Open</option>
+        <option value="resolved">Resolved</option>
+    </select>
+    <button type="submit">Обновить</button>
+</form>
+
+{% if error_message %}
+    <p style="color:red; font-weight:bold;">{{ error_message }}</p>
+{% endif %}
+
+<h1>Инциденты</h1>
+
+<!-- Фильтр по статусу -->
+<form method="get">
+    <label>Фильтр по статусу:</label>
+    <select name="status">
+        <option value="">Все</option>
+        <option value="open" {% if status_filter == 'open' %}selected{% endif %}>Open</option>
+        <option value="resolved" {% if status_filter == 'resolved' %}selected{% endif %}>Resolved</option>
+    </select>
+    <button type="submit">Фильтровать</button>
+</form>
+
+<!-- Создание нового инцидента -->
+<h2>Создать инцидент</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="description" placeholder="Описание" required>
+    <select name="source">
+        <option value="operator">Operator</option>
+        <option value="monitoring">Monitoring</option>
+        <option value="partner">Partner</option>
+    </select>
+    <button type="submit">Создать</button>
+</form>
+
+<!-- Список инцидентов -->
+<h2>Список инцидентов</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Время создания</th>
+        <th>Device ID</th>
+        <th>Статус</th>
+        <th>Источник</th>
+        <th>Описание</th>
+
+    </tr>
+    {% for alert in alerts %}
+    <tr>
+        <td>{{ alert.id }}</td>
+        <td>{{ alert.create_time }}</td>
+        <td>{{ alert.device_id }}</td>
+        <td>{{ alert.status }}</td>
+        <td>{{ alert.source }}</td>
+        <td>{{ alert.description }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
