@@ -31,6 +31,8 @@ python manage.py runserver
 URL: /api/pingloss/
 Метод: POST
 Body (JSON):
+
+```bash
 {
   "description": "Связь с самокатом потеряна",
   "device_id": "1221",
@@ -41,10 +43,12 @@ Body (JSON):
   "device_id": "1221",
   "ping_status": "loss"
 }
-есть файлик simulate_bot_loss, меняя ping_status и device_id можно протестировать, запись в базу данных и
+```
+
+Есть файлик simulate_bot_loss, меняя ping_status и device_id можно протестировать, запись в базу данных и
 изменения статуса по API.
 
-2. Веб-интерфейс для просмотра и управления инцидентами
+3. Веб-интерфейс для просмотра и управления инцидентами
 URL: /allerts/
 Метод: GET
 Описание: отображает таблицу всех инцидентов, позволяет:
